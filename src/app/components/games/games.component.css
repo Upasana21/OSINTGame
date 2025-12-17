@@ -1,0 +1,25 @@
+.container {
+  color: rgb(246, 243, 243);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .heading {
+    font-family: Arial, Helvetica, Impact, Haettenschweiler, "Arial Narrow Bold",
+      sans-serif;
+    font-size: 3rem;
+    font-weight: 900;
+    font-style: italic;
+    margin: 40px 50px;
+    justify-content: center;
+
+    /* color: rgba(0, 0, 0, 0);
+    background: linear-gradient(180deg, #fff 6.5%, #c2c2db 80%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 0.0625rem 0.125rem var(--ds-color-purple-100)); */
+  }
+  .btn-start {
+    width: 8rem;
+    font-size: 17px;
+  }
+}
