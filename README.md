@@ -1,5 +1,9 @@
 # OSINTGame
 
+In this game player will guess the location i.e. latitude and longitude of the images shown in the page. Player will be awarded with the score which is based on how close coordinates is guessed.
+
+# OSINTGame
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.19.
 
 ## Development server
