@@ -9,8 +9,9 @@ import { Router } from '@angular/router';
 })
 export class GamesComponent {
   constructor(private router: Router) { }
-
+  playerName: string = "Player";
   onStartGameClick(): void {
     this.router.navigate(['/gamePlay'])
   }
 }
+

@@ -1,9 +1,47 @@
 <div class="container">
-    <div class="top">
-        <h1 class="heading">Welcome {{'User'}} on OSINT Game</h1>
+    <div class="header">
+        <div class="header-left">
+            <p class="logo">OSINTGame</p>
+        </div>
+        <div class="header-right">User Icon</div>
     </div>
-    <div class="middle"></div>
+    <div class="middle">
+        <h1 class="heading">Welcome {{playerName}} to the Guess Game!</h1>
+
+        <div class="how-to-play-list">
+            <div class="step-item">
+                <span class="step-icon">1</span>
+                <span class="step-text">You’ll see 3 images, one at a time.</span>
+            </div>
+
+            <div class="step-item">
+                <span class="step-icon">2</span>
+                <span class="step-text">
+                    Guess the location by entering latitude and longitude.
+                </span>
+            </div>
+
+            <div class="step-item">
+                <span class="step-icon">3</span>
+                <span class="step-text">
+                    The closer your guess is, the more points you earn!
+                </span>
+            </div>
+
+            <div class="step-item">
+                <span class="step-icon">4</span>
+                <span class="step-text">
+                    Try to score as high as possible and get a perfect score!
+                </span>
+            </div>
+        </div>
+
+    </div>
     <div class="bottom">
         <button class="btn btn-start" (click)="onStartGameClick()">Start Game</button>
+    </div>
+    <div class="image-container">
+        <img src="images/globe.png" alt="Globe" class="globe">
+        <img src="images/girl.png" alt="Girl" class="girl">
     </div>
 </div>
