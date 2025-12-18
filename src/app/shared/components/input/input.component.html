@@ -1,0 +1,9 @@
+<div class="input-container">
+    <label [for]="label">{{label}}</label>
+    <input [ngClass]="{'error-box':control.invalid && control.touched }" [type]="type" [formControl]="control"
+        [placeholder]="label" />
+    @if(control.invalid &&(control.touched || control.dirty)){
+    <p class="error">Please enter {{label}}</p>
+    }
+
+</div>

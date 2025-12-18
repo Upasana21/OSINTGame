@@ -2,26 +2,21 @@
     <ng-container class="container-left">
         <form class="form" [formGroup]="gameForm" (ngSubmit)="onFormSubmit()">
             <h1 class="form-heading">Let's Guess the Location</h1>
-            <div class="form-lat">
-                <label for="latitude">Latitude</label>
-                <input type="number" formControlName="latitude" name="latitude" placeholder="Latitude" />
-            </div>
-            <div class="form-lng">
-                <label for="longitude">Longitude</label>
-                <input type="number" formControlName="longitude" name="longitude" placeholder="Longitude" />
-            </div>
-            @if(gameForm.invalid){
-            <p>Enter both latitude and longitude</p>
-            }
+            <app-input label="Latitude" type="number" [control]="gameForm.controls['latitude']">
+            </app-input>
+            <app-input label="Longitude" type="number" [control]="gameForm.controls['longitude']">
+            </app-input>
+
             <button class="btn btn-guess">Guess</button>
         </form>
     </ng-container>
     <ng-container class="container-right">
-        <!-- <img src="images/image3.jpg" alt="Image" class="gameImage"> -->
-        @if(isSubmitted){
+        <img src="images/image3.jpg" alt="Image" class="gameImage">
+
+        <!-- @if(isSubmitted){
         <app-map [guessLat]="guessLat" [guessLng]="guessLng" [actualLat]="actualLat" [actualLng]="actualLng">
         </app-map>
-        }
+        } -->
 
 
     </ng-container>
