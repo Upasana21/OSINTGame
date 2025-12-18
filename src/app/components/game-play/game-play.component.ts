@@ -49,11 +49,11 @@ export class GamePlayComponent implements OnInit {
 
   onFormSubmit(): void {
     this.isSubmitted = true;
-    this.guessLat = this.gameForm?.get('latitude')?.value;
-    this.guessLng = this.gameForm?.get('longitude')?.value;
 
     if (this.gameForm.valid) {
       this.guessCount++;
+      this.guessLat = this.gameForm?.get('latitude')?.value;
+      this.guessLng = this.gameForm?.get('longitude')?.value;
       this.data = {
         playerName: 'Andy',
         imageId: 1,
@@ -64,11 +64,11 @@ export class GamePlayComponent implements OnInit {
         guessCount: this.guessCount,
         distance: 0
       }
+      this.gameForm.reset();
+      console.log('data', this.data)
     } else {
       this.gameForm.markAllAsTouched();
     }
-
-    console.log('data', this.data)
   }
 
 }
