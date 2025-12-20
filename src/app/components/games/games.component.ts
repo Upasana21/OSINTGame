@@ -11,7 +11,7 @@ export class GamesComponent {
   constructor(private router: Router) { }
   playerName: string = "Player";
   onStartGameClick(): void {
-    this.router.navigate(['/gamePlay'])
+    this.router.navigate(['/gamePlay', 1])
   }
 }
 
