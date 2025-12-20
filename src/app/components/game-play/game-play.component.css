@@ -1,16 +1,25 @@
 .container {
   display: flex;
+  overflow: hidden;
+  min-height: 100vh;
+  flex-direction: column;
+  /* align-items: stretch; */
+  /* flex-wrap: wrap; */
 
   .form {
-    margin: 9px;
+    margin-left: 1rem;
     background-color: #4a2399;
-    min-height: 90vh;
-    max-width: 60vh;
+    width: 100%;
+    max-width: 420px;
+    min-height: 70vh;
+
     display: flex;
     flex-direction: column;
     flex: 1;
     justify-content: center;
     padding: 20px;
+    border-radius: 1rem;
+    box-sizing: border-box;
 
     .form-heading {
       padding: 0 30px;
@@ -18,11 +27,51 @@
   }
 }
 
-.btn-guess {
-  margin: 1rem 1rem 1rem 6rem;
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+.btn-next {
+  background-color: black;
+  color: white;
+  padding: 6px;
 }
 
+.display-box {
+  background: rgb(222, 217, 217);
+  width: 90%;
+  min-height: 450px;
+  display: flex;
+  flex-direction: row;
+
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 1rem;
+  overflow: hidden;
+  /* position: relative;
+  top: 12px; */
+}
+
+/* @media (max-width: 900px) {
+  .display-box {
+    min-height: 300px;
+  }
+} */
+
 .gameImage {
-  height: 575px;
-  width: 870px;
+  height: 450px;
+  width: 700px;
+  display: block;
+  /* height: 100%;
+  object-fit: cover; */
+  border-radius: 1rem;
+}
+
+.level-heading {
+  font-size: 1.8rem;
+  text-align: center;
+  color: rgb(225, 231, 57);
+  margin-bottom: 2px;
 }

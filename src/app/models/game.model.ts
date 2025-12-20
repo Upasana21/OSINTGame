@@ -7,5 +7,5 @@ export interface GameModel {
     date: Date;
     score: number;
     guessCount: number;
-    distance?: number;
+    distanceInMeters?: number;
 }

@@ -1,0 +1,28 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DistanceService {
+
+  constructor() { }
+
+  calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
+    const earthRadiusInMeters = 6371000;
+    const dLat = this.deg2rad(lat2 - lat1);
+    const dLng = this.deg2rad(lng2 - lng1);
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = earthRadiusInMeters * c;
+
+    return parseFloat(distance.toFixed(2));
+  }
+  //degree to radian
+  private deg2rad(deg: number): number {
+    return deg * (Math.PI / 180);
+  }
+}

@@ -1,27 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 import { MapComponent } from "../map/map.component";
 import { InputComponent } from "../../shared/components/input/input.component";
 import { GameModel } from '../../models/game.model';
+import { LOCATIONS } from '../../constants/location.constants';
+import { DistanceService } from '../../services/distance.service';
+import { ScoreService } from '../../services/score.service';
 
 
 @Component({
   selector: 'app-game-play',
-  imports: [ReactiveFormsModule, MapComponent, InputComponent],
+  imports: [CommonModule, ReactiveFormsModule, MapComponent, InputComponent],
   templateUrl: './game-play.component.html',
   styleUrl: './game-play.component.css'
 })
 export class GamePlayComponent implements OnInit {
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private distanceService: DistanceService,
+    private scoreService: ScoreService
+  ) { }
 
   gameForm!: FormGroup;
   isSubmitted: boolean = false;
-  guessLat: number = 0;
-  guessLng: number = 0;
-  actualLat = -33.851870;
-  actualLng = 151.190186;
+
+  // guessLat: number = 0;
+  // guessLng: number = 0;
+  // actualLat = -33.851870;
+  // actualLng = 151.190186;
   guessCount: number = 0;
+  gameLevels: any = LOCATIONS;
+  currentIndex: number = 0;
   data: GameModel = {
     imageId: 0,
     playerName: '',
@@ -30,11 +39,10 @@ export class GamePlayComponent implements OnInit {
     date: new Date(),
     score: 0,
     guessCount: 0,
-    distance: 0
+    distanceInMeters: 0
   }
+  gameHistory: GameModel[] = [];
 
-  // 46.5018939,7.697529
-  //-33.851870, 151.190186
 
   ngOnInit(): void {
     this.createForm();
@@ -52,23 +60,55 @@ export class GamePlayComponent implements OnInit {
 
     if (this.gameForm.valid) {
       this.guessCount++;
-      this.guessLat = this.gameForm?.get('latitude')?.value;
-      this.guessLng = this.gameForm?.get('longitude')?.value;
+
+      const guessLat = this.gameForm?.get('latitude')?.value;
+      const guessLng = this.gameForm?.get('longitude')?.value;
+      const actualLat = this.gameLevels[this.currentIndex].latitude;
+      const actualLng = this.gameLevels[this.currentIndex].longitude;
+
+      const distance = this.distanceService.calculateDistance(guessLat, guessLng, actualLat, actualLng)
+      const points = this.scoreService.calculateScore(distance)
       this.data = {
         playerName: 'Andy',
-        imageId: 1,
-        guessLatitude: this.guessLat,
-        guessLongitude: this.guessLng,
+        imageId: this.gameLevels[this.currentIndex].id,
+        guessLatitude: guessLat,
+        guessLongitude: guessLng,
         date: new Date(),
-        score: 0,
+        score: points,
         guessCount: this.guessCount,
-        distance: 0
+        distanceInMeters: distance
       }
+      this.gameHistory.push(this.data)
       this.gameForm.reset();
-      console.log('data', this.data)
+
+      console.log(this.gameHistory);
+
+      const res = this.gameHistory.reduce<Record<number, GameModel>>(
+        (acc, current) => {
+          acc[current.imageId] = current;
+          return acc;
+        },
+        {}
+      );
+
+      const values = Object.values(res);
+      console.log('fiinal', values)
+
     } else {
       this.gameForm.markAllAsTouched();
     }
   }
+
+  nextStep(): void {
+    if (this.currentIndex < this.gameLevels.length - 1 && this.isSubmitted) {
+      this.currentIndex++;
+      this.isSubmitted = false;
+      this.guessCount = 0;
+      this.gameForm.reset();
+    } else {
+      console.log('Game Over!!!')
+    }
+  }
+
 
 }
