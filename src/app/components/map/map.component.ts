@@ -1,19 +1,21 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import * as L from 'leaflet';
 
 @Component({
   selector: 'app-map',
   imports: [],
   templateUrl: './map.component.html',
-  styleUrl: './map.component.css'
+  styleUrl: './map.component.css',
 })
 export class MapComponent implements AfterViewInit {
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private dialog: MatDialog) { }
+  public data = inject(MAT_DIALOG_DATA);
 
-  @Input({ required: true }) guessLat!: number;
-  @Input({ required: true }) guessLng!: number;
-  @Input({ required: true }) actualLat!: number;
-  @Input({ required: true }) actualLng!: number;
+  guessLat: number = this.data.guessLat || 0;
+  guessLng: number = this.data.guessLng || 0;
+  actualLat: number = this.data.actualLat || 0;
+  actualLng: number = this.data.actualLng || 0;
 
   distanceMeters = 0;
 
@@ -24,24 +26,23 @@ export class MapComponent implements AfterViewInit {
     this.initializeMap();
     this.updateMap();
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.map && this.inputsAreValid()) {
-      this.updateMap();
-    }
-  }
 
   private initializeMap(): void {
     this.map = L.map('map', {
       zoomControl: true,
       attributionControl: false,
-      center: [(this.guessLat + this.actualLat) / 2, (this.guessLng + this.actualLng) / 2],
-
+      center: [
+        (this.guessLat + this.actualLat) / 2,
+        (this.guessLng + this.actualLng) / 2,
+      ],
     });
+    this.map.setView([0, 0], 2);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       minZoom: 3,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     }).addTo(this.map);
 
     this.layerGroup.addTo(this.map);
@@ -50,45 +51,55 @@ export class MapComponent implements AfterViewInit {
   private updateMap(): void {
     this.layerGroup.clearLayers();
 
-    //using latLng to mark on the map
     const guess = L.latLng(this.guessLat, this.guessLng);
     const actual = L.latLng(this.actualLat, this.actualLng);
 
-    const guessMarker = L.marker(guess).bindPopup('Your Guess');
-    const actualMarker = L.marker(actual).bindPopup('Correct Location');
+    const guessMarker = L.marker(guess, {
+      icon: this.createColoredIcon('#4caf50'),
+    }).bindPopup('Your Guess');
+    const actualMarker = L.marker(actual, {
+      icon: this.createColoredIcon('#f44336'),
+    }).bindPopup('Correct Location');
 
     const line = L.polyline([guess, actual], {
-      color: '#e53935',
+      color: '#cc0f0bff',
       weight: 3,
       dashArray: '6,4',
-    });
-
-    // this.distanceMeters = Math.round(this.calculateDistance(guess, actual));
+    }).addTo(this.map);
 
     this.layerGroup.addLayer(guessMarker);
     this.layerGroup.addLayer(actualMarker);
-    this.layerGroup.addLayer(line);
-    //finding distance with leaflet inbuilt feature distanceTo
+
+    this.map.flyToBounds(L.latLngBounds([guess, actual]), {
+      padding: [100, 100],
+      duration: 1.5,
+    });
+
     this.distanceMeters = Math.floor(guess.distanceTo(actual));
-    this.cdr.detectChanges();
+    this.showDistancePopup(line);
+  }
 
-    // console.log('dist', this.distanceMeters, 'jfj', dist)
-
-    this.map.fitBounds(L.latLngBounds([guess, actual]), {
-      padding: [40, 40],
+  createColoredIcon(color: string): any {
+    return L.divIcon({
+      className: 'custom-marker',
+      html: `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${color}" width="36px" height="36px">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+      </svg>`,
+      iconSize: [36, 36],
+      iconAnchor: [18, 36],
+      popupAnchor: [0, -30],
     });
   }
-  private calculateDistance(a: L.LatLng, b: L.LatLng): number {
-    return this.map?.distance(a, b);
-  }
 
-  private inputsAreValid(): boolean {
-    return (
-      isFinite(this.guessLat) &&
-      isFinite(this.guessLng) &&
-      isFinite(this.actualLat) &&
-      isFinite(this.actualLng)
-    );
-  }
+  showDistancePopup(line: any): void {
+    const distancePopup = L.popup()
+      .setLatLng(line.getBounds().getCenter())
+      .setContent(`Distance: ${this.distanceMeters} m`)
+      .openOn(this.map);
 
+    setTimeout(() => {
+      this.map.closePopup(distancePopup);
+    }, 2000);
+  }
 }

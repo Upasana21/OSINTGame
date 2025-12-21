@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -6,20 +6,25 @@ import { Injectable } from '@angular/core';
 export class ScoreService {
 
   constructor() { }
+  readonly totalScore = signal<number>(Number(localStorage.getItem('lastScore')) || 0);
+
   calculateScore(distanceMeters: number): number {
     if (distanceMeters === 0) return 15;
     if (distanceMeters > 50) return 0;
-    /*MaxPoint =15, minPoint=1 on right guess, greater than 50m =0,
-     between 50-0m=> points calculated based on this formula
-    Formula: MaxPoints - (distance * (MaxPoints - MinPoints) / MaxDistance)
-    */
+
+    //Formula: MaxPoints - (distance * (MaxPoints - MinPoints) / MaxDistance)
+
     const points = 15 - (distanceMeters * (14 / 50));
     return Math.max(0, Math.round(points));
   }
-  // calculateScore(distanceinKm: number): number {
-  //   if (distanceinKm === 0) return 15;
-  //   if (distanceinKm > 5) return 0; 
-  //   const points = 15 - (distanceinKm * (14 / 5));
-  //   return Math.max(0, Math.round(points));
-  // }
+
+  setTotalScore(score: number): void {
+    this.totalScore.set(score);
+    localStorage.setItem('lastScore', score.toString());
+  }
+  resetScore(): void {
+    this.totalScore.set(0);
+  }
+
+
 }

@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
+  height: 80%;
   background-color: #253b61;
   color: whitesmoke;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -28,4 +28,31 @@ body {
 button:active,
 button:hover {
   transform: scale(1.1);
+}
+
+.full-width-top-error {
+  margin-top: 1rem !important;
+}
+
+/* This targets the actual background and box */
+.full-width-top-error .mdc-snackbar__surface {
+  background-color: #b71c1c !important;
+  min-width: 50vw !important;
+  min-height: 80px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* This targets the text inside */
+.full-width-top-error .mdc-snackbar__label {
+  color: white !important;
+  font-size: 1.5rem !important;
+  text-align: center !important;
+  flex-grow: 1 !important;
+}
+
+.full-width-top-error .mdc-snackbar__action {
+  color: yellow !important;
+  font-weight: bold !important;
 }

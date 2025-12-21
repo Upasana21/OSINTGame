@@ -1,0 +1,21 @@
+<mat-dialog-content>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="distance">
+            <th mat-header-cell *matHeaderCellDef> Distance (m) </th>
+            <td mat-cell *matCellDef="let element"> {{element.distance}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="points">
+            <th mat-header-cell *matHeaderCellDef> Points </th>
+            <td mat-cell *matCellDef="let element"> {{element.points}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="logic">
+            <th mat-header-cell *matHeaderCellDef> Logic </th>
+            <td mat-cell *matCellDef="let element"> {{element.logic}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</mat-dialog-content>

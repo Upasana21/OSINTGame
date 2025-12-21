@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { GamesComponent } from './components/games/games.component';
 import { GamePlayComponent } from './components/game-play/game-play.component';
 import { levelGuard } from './guards/level.guard';
+import { SummaryComponent } from './components/summary/summary.component';
 
 export const routes: Routes = [
     { path: '', component: GamesComponent },
