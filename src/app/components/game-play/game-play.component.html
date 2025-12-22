@@ -2,17 +2,18 @@
     <h1 class="level-heading">Level {{gameLevels[id-1].id}}</h1>
     <div class="display-box">
         @if(gameLevels[id-1]){
-        <!-- <ng-container class="left-container"> -->
         <img [src]="gameLevels[id-1].imageUrl" alt="Image" class="gameImage">
-        <!-- </ng-container> -->
         <form class="form" [formGroup]="gameForm" (ngSubmit)="onFormSubmit()">
+            <div class="home" (click)="displayConfirmDialog()">
+                <mat-icon>home</mat-icon>
+            </div>
             <h1 class="form-heading">Let's Guess the Location</h1>
             <app-input label="Latitude" type="number" [control]="gameForm.controls['latitude']">
             </app-input>
             <app-input label="Longitude" type="number" [control]="gameForm.controls['longitude']">
             </app-input>
             <div class="button-row">
-                <button class="btn btn-guess">Guess</button>
+                <button class="btn btn-guess" [hidden]="distance<=50 && isSubmitted">Guess</button>
                 <button type="button" *ngIf="showNextButton" class="btn btn-next" (click)="nextStep()">
                     {{id-1!=2?'NEXT':'FINISH'}}
                 </button>

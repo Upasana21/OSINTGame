@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as L from 'leaflet';
 
 @Component({
@@ -9,7 +9,7 @@ import * as L from 'leaflet';
   styleUrl: './map.component.css',
 })
 export class MapComponent implements AfterViewInit {
-  constructor(private dialog: MatDialog) { }
+  constructor() { }
   public data = inject(MAT_DIALOG_DATA);
 
   guessLat: number = this.data.guessLat || 0;

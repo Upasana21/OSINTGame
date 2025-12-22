@@ -1,0 +1,16 @@
+.user-input {
+  width: 430px;
+  max-height: 25px;
+  padding: 4px;
+  font-size: 1rem;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  overflow: hidden;
+}
+.btn-go {
+  cursor: pointer;
+  background-color: #97e851;
+}

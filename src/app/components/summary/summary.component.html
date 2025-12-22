@@ -1,6 +1,7 @@
 <div class="summary-header">
     <h2 mat-dialog-title>
-        Game Complete! Your Score: {{ scoreService.totalScore() }}
+        Game Complete!
+        <div class="score">Your Score: {{ scoreService.totalScore() }}</div>
     </h2>
     <mat-icon class="info-btn" matTooltip="View Scoring Logic" (click)="openScoringInfo()">
         info
@@ -8,7 +9,7 @@
 </div>
 @for(item of data.data;track item.imageId ){
 <mat-dialog-content>
-    <p class="item">
+    <p class="item" [style.color]="item.distanceInMeters <= 50 ? 'green' : 'red'">
         You were <strong>{{ item.distanceInMeters }} m</strong> away from Location
         {{ item.imageId }}
     </p>
@@ -16,5 +17,6 @@
 }
 
 <mat-dialog-actions align="end">
+    <button mat-button (click)="restartGame()">Restart</button>
     <button mat-button (click)="close()">Close</button>
 </mat-dialog-actions>

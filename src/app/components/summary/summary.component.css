@@ -9,3 +9,14 @@
   color: #f6f6f8;
   cursor: pointer;
 }
+
+.score {
+  margin-left: 6px;
+}
+
+.score-dialog-list {
+  width: 350px;
+  position: absolute;
+  top: 170px;
+  left: 60%;
+}

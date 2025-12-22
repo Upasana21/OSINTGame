@@ -25,18 +25,16 @@ export class SummaryComponent {
   close() {
     this.dialogRef.close();
   }
-  backToHome(): void {
-    this.router.navigate([' '])
-  }
+
   openScoringInfo(): void {
     this.dialog.open(ScoringInfoComponent, {
-      width: '350px',
-      position: {
-        top: '170px',
-        left: '60%'
-      },
+      panelClass: 'score-dialog-list',
       hasBackdrop: true, //outside click to close
       backdropClass: 'transparent-backdrop',
     })
+  }
+  restartGame(): void {
+    this.router.navigate(['/gamePlay', 1]);
+    this.close();
   }
 }

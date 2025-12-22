@@ -3,10 +3,15 @@
         <div class="header-left">
             <p class="logo">OSINTGame</p>
         </div>
-        <div class="header-right">score {{score}}</div>
+        <div class="score-container">
+            <p>{{commonService.playerName() || name}}</p>
+            <div class="score-circle">
+                <span class="obtained">{{ scoreService.totalScore() || score }}</span>
+            </div>
+        </div>
     </div>
     <div class="middle">
-        <h1 class="heading">Welcome {{playerName}} to the Guess Game!</h1>
+        <h1 class="heading">Welcome <strong style="color:yellow">Detectives</strong> to the Guess Game!</h1>
 
         <div class="how-to-play-list">
             <div class="step-item">

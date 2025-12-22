@@ -9,3 +9,9 @@ export interface GameModel {
     guessCount: number;
     distanceInMeters?: number;
 }
+
+export interface ScoreModel {
+    playerName: string;
+    date: Date;
+    totalScore: number;
+}

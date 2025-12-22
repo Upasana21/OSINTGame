@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { UserInputComponent } from '../../shared/components/user-input/user-input.component';
+import { CommonService } from '../../services/common.service';
+import { ScoreService } from '../../services/score.service';
 
 @Component({
   selector: 'app-games',
@@ -8,11 +11,19 @@ import { Router } from '@angular/router';
   styleUrl: './games.component.css'
 })
 export class GamesComponent {
-  constructor(private router: Router) { }
-  playerName: string = "Player";
-  score: number = Number(localStorage.getItem('lastScore')) || 0;
+  constructor(private dialog: MatDialog, public commonService: CommonService, public scoreService: ScoreService) { }
+  // to store data from localstorage+db
+  name: any = localStorage.getItem('name');
+  score: number = Number(localStorage.getItem('lastScore'));
+
   onStartGameClick(): void {
-    this.router.navigate(['/gamePlay', 1])
+    this.dialog.open(UserInputComponent, {
+      width: "600px",
+      disableClose: false
+    })
+    localStorage.removeItem('activeLevel');
+    localStorage.setItem('lastScore', '0');
+    this.scoreService.totalScore.set(0);
   }
 }
 

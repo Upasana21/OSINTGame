@@ -34,7 +34,7 @@ button:hover {
   margin-top: 1rem !important;
 }
 
-/* This targets the actual background and box */
+/* background and box snackbar */
 .full-width-top-error .mdc-snackbar__surface {
   background-color: #b71c1c !important;
   min-width: 50vw !important;
@@ -44,7 +44,7 @@ button:hover {
   justify-content: center !important;
 }
 
-/* This targets the text inside */
+/* text inside snackbar*/
 .full-width-top-error .mdc-snackbar__label {
   color: white !important;
   font-size: 1.5rem !important;
@@ -55,4 +55,19 @@ button:hover {
 .full-width-top-error .mdc-snackbar__action {
   color: yellow !important;
   font-weight: bold !important;
+}
+
+.mat-mdc-dialog-actions.mat-mdc-dialog-actions-align-end,
+.mat-mdc-dialog-actions {
+  gap: 9px;
+}
+
+@media screen and (max-width: 768px) {
+  .full-width-top-error .mdc-snackbar__surface {
+    width: 80vw !important;
+    min-height: 60px !important;
+  }
+  .full-width-top-error .mdc-snackbar__label {
+    font-size: 1rem !important;
+  }
 }
