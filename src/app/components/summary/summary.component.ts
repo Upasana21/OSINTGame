@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { ScoreService } from '../../services/score.service';
 import { Router } from '@angular/router';
 import { DistanceService } from '../../services/distance.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -15,7 +14,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 })
 export class SummaryComponent {
   private router = inject(Router);
-  public scoreService = inject(ScoreService);
   public distanceService = inject(DistanceService)
   private dialogRef = inject(MatDialogRef<SummaryComponent>);
   private dialog = inject(MatDialog)

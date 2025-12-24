@@ -173,9 +173,10 @@ export class GamePlayComponent implements OnInit {
       this.router.navigate(['']);
     }
   }
-
+  finalScore: number = 0;
   updatePlayerNameandScore(): void {
-    const finalScore = this.finalResult.reduce((acc, cur) => {
+    //calculating totalScore
+    this.finalScore = this.finalResult.reduce((acc, cur) => {
       acc += cur.score;
       return acc;
     }, 0);
@@ -183,7 +184,7 @@ export class GamePlayComponent implements OnInit {
       .savePlayerTotalScore({
         playerName: this.playerName,
         date: new Date(),
-        totalScore: finalScore,
+        totalScore: this.finalScore,
       })
       .pipe(
         switchMap((response: any) => {
@@ -223,7 +224,7 @@ export class GamePlayComponent implements OnInit {
       maxWidth: '90vw',
       panelClass: 'summary-dialog',
       disableClose: true,
-      data: { data: this.finalResult },
+      data: { data: this.finalResult, score: this.finalScore },
     });
   }
 
